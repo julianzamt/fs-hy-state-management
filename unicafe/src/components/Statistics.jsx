@@ -4,8 +4,8 @@ const Statistics = () => {
   const { good, neutral, bad } = useValues();
 
   const all = good + neutral + bad;
-  const average = (good - bad) / 3;
-  const positive = (good * 100) / all;
+  const average = (good - bad) / all || 0;
+  const positive = (good * 100) / all || 0;
 
   return (
     <div>
@@ -34,7 +34,7 @@ const Statistics = () => {
           </tr>
           <tr>
             <td>positive</td>
-            <td>{positive}</td>
+            <td>{positive} %</td>
           </tr>
         </tbody>
       </table>
