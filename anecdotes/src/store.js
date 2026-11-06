@@ -1,17 +1,20 @@
-import { create } from 'zustand';
-import anecdotesService from './services/anecdotes';
+import { create } from "zustand";
+import anecdotesService from "./services/anecdotes";
 
 const useAnecdoteStore = create((set) => ({
   anecdotes: [],
-  filter: '',
+  filter: "",
   actions: {
-    vote: (id) =>
+    vote: async (id) => {
+      const res = await anecdotesService.vote(id);
+
       set((state) => ({
         anecdotes: state.anecdotes
-          .map((a) => (a.id === id ? { ...a, votes: a.votes + 1 } : a))
+          .map((a) => (a.id === id ? { ...a, votes: res.votes } : a))
           .toSorted((a, b) => b.votes - a.votes),
-      })),
-    add: async (newAnecdote) => {
+      }));
+    },
+    dd: async (newAnecdote) => {
       const ret = await anecdotesService.create(newAnecdote);
 
       set((state) => ({
