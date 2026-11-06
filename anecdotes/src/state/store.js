@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import anecdotesService from "./services/anecdotes";
+import anecdotesService from "../services/anecdotes";
 
 const useAnecdoteStore = create((set) => ({
   anecdotes: [],
@@ -13,13 +13,17 @@ const useAnecdoteStore = create((set) => ({
           .map((a) => (a.id === id ? { ...a, votes: res.votes } : a))
           .toSorted((a, b) => b.votes - a.votes),
       }));
+
+      return res;
     },
-    dd: async (newAnecdote) => {
+    add: async (newAnecdote) => {
       const ret = await anecdotesService.create(newAnecdote);
 
       set((state) => ({
         anecdotes: [...state.anecdotes, ret],
       }));
+
+      return ret;
     },
     setFilter: (f) => set({ filter: f }),
     initialize: async () => {
@@ -29,7 +33,7 @@ const useAnecdoteStore = create((set) => ({
   },
 }));
 
-export const useAnecdotes = (state) => {
+export const useAnecdotes = () => {
   const anecdotes = useAnecdoteStore((state) => state.anecdotes);
   const filter = useAnecdoteStore((state) => state.filter);
   const anecdotesToShow = filter

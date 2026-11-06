@@ -27,8 +27,6 @@ const create = async (anecdote) => {
 };
 
 const vote = async (id) => {
-  console.log({ id });
-
   const res = await fetch(`${baseUrl}/${id}`);
 
   if (!res.ok) {

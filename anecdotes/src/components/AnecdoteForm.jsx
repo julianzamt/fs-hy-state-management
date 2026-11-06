@@ -1,11 +1,14 @@
-import { useActions } from '../store';
+import { useNotificationActions } from "../state/notification-store";
+import { useActions } from "../state/store";
 
 const AnecdoteForm = () => {
   const actions = useActions();
+  const { notify } = useNotificationActions();
 
-  const add = (e) => {
+  const add = async (e) => {
     e.preventDefault();
-    actions.add(e.target.new.value);
+    const res = await actions.add(e.target.new.value);
+    notify(`You added ${res.content}`);
     e.target.reset();
   };
 

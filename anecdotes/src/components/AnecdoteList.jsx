@@ -1,11 +1,15 @@
-import { useAnecdotes, useActions } from '../store';
+import { useAnecdotes, useActions } from "../state/store";
+import { useNotificationActions } from "../state/notification-store";
 
 const AnecdoteList = () => {
   const anecdotes = useAnecdotes();
   const actions = useActions();
+  const { notify } = useNotificationActions();
 
-  const vote = (id) => {
-    actions.vote(id);
+  const vote = async (id) => {
+    const res = await actions.vote(id);
+    console.log({ res });
+    notify(`You voted for ${res.content}`);
   };
 
   return anecdotes.map((anecdote) => (
