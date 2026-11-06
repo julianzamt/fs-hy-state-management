@@ -1,4 +1,12 @@
 import { defineConfig, devices } from "@playwright/test"
+import { existsSync, writeFileSync } from "node:fs"
+
+// json-server refuses to start if its data file is missing, and the tests only
+// create it once the servers are already up. Seed it here so a clean checkout
+// can start; the tests' resetDb fills in the real data.
+if (!existsSync("db-test.json")) {
+  writeFileSync("db-test.json", JSON.stringify({ anecdotes: [] }))
+}
 
 export default defineConfig({
   testDir: "./tests",
