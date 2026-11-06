@@ -8,8 +8,12 @@ const AnecdoteList = () => {
 
   const vote = async (id) => {
     const res = await actions.vote(id);
-    console.log({ res });
     notify(`You voted for ${res.content}`);
+  };
+
+  const remove = async (id) => {
+    await actions.remove(id);
+    notify(`Succesfully removed`);
   };
 
   return anecdotes.map((anecdote) => (
@@ -19,6 +23,9 @@ const AnecdoteList = () => {
         has {anecdote.votes}
         <button onClick={() => vote(anecdote.id)}>vote</button>
       </div>
+      {anecdote.votes === 0 && (
+        <button onClick={() => remove(anecdote.id)}>delete</button>
+      )}
     </div>
   ));
 };

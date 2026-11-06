@@ -49,4 +49,12 @@ const vote = async (id) => {
   return await res2.json();
 };
 
-export default { getAll, create, vote };
+const remove = async (id) => {
+  const opts = {
+    method: "DELETE",
+  };
+
+  await fetch(`${baseUrl}/${id}`, opts);
+};
+
+export default { getAll, create, vote, remove };
