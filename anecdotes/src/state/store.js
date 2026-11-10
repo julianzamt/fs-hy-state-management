@@ -9,9 +9,9 @@ export const useAnecdoteStore = create((set) => ({
       const res = await anecdotesService.vote(id);
 
       set((state) => ({
-        anecdotes: state.anecdotes
-          .map((a) => (a.id === id ? { ...a, votes: res.votes } : a))
-          .toSorted((a, b) => b.votes - a.votes),
+        anecdotes: state.anecdotes.map((a) =>
+          a.id === id ? { ...a, votes: res.votes } : a,
+        ),
       }));
 
       return res;
@@ -27,10 +27,8 @@ export const useAnecdoteStore = create((set) => ({
     },
     setFilter: (f) => set({ filter: f }),
     initialize: async () => {
-      const anecdotes = (await anecdotesService.getAll()).toSorted(
-        (a, b) => b.votes - a.votes,
-      );
-      set({ anecdotes });
+      const anecdotes = await anecdotesService.getAll();
+      set(() => ({ anecdotes }));
     },
     remove: async (id) => {
       await anecdotesService.remove(id);
@@ -49,7 +47,9 @@ export const useAnecdotes = () => {
     ? anecdotes.filter((a) => a.content.toLowerCase().includes(filter))
     : anecdotes;
 
-  return anecdotesToShow;
+  const sorted = anecdotesToShow.toSorted((a, b) => b.votes - a.votes);
+
+  return sorted;
 };
 
 export const useActions = () => useAnecdoteStore((state) => state.actions);

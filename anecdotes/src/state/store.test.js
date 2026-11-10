@@ -32,18 +32,4 @@ describe('useActions', () => {
     const { result: notesResult } = renderHook(() => useAnecdotes());
     expect(notesResult.current).toEqual(mockAnecdotes);
   });
-
-  //   it('add appends a new note', async () => {
-  //     const newNote = { id: 2, content: 'New note', important: false };
-  //     anecdoteService.createNew.mockResolvedValue(newNote);
-
-  //     const { result } = renderHook(() => useActions());
-
-  //     await act(async () => {
-  //       await result.current.add('New note');
-  //     });
-
-  //     const { result: notesResult } = renderHook(() => useAnecdotes());
-  //     expect(notesResult.current).toContainEqual(newNote);
-  //   });
 });

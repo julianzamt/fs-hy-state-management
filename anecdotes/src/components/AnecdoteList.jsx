@@ -1,5 +1,5 @@
-import { useAnecdotes, useActions } from "../state/store";
-import { useNotificationActions } from "../state/notification-store";
+import { useAnecdotes, useActions } from '../state/store';
+import { useNotificationActions } from '../state/notification-store';
 
 const AnecdoteList = () => {
   const anecdotes = useAnecdotes();
