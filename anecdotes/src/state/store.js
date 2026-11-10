@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import anecdotesService from "../services/anecdotes";
+import { create } from 'zustand';
+import anecdotesService from '../services/anecdotes';
 
-const useAnecdoteStore = create((set) => ({
+export const useAnecdoteStore = create((set) => ({
   anecdotes: [],
-  filter: "",
+  filter: '',
   actions: {
     vote: async (id) => {
       const res = await anecdotesService.vote(id);
