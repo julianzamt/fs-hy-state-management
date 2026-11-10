@@ -18,7 +18,7 @@ describe('AnecdoteList comp', () => {
   ];
 
   beforeEach(() => {
-    useAnecdoteStore.setState({ anecdotes });
+    useAnecdoteStore.setState({ anecdotes, filter: '' });
   });
 
   it('receives the anecdotes from the store sorted by votes', () => {
@@ -32,5 +32,17 @@ describe('AnecdoteList comp', () => {
       'If it hurts, do it more often',
       'Adding manpower to a late software project makes it later!',
     ]);
+  });
+
+  it('receives a properly filtered list of anecdotes', () => {
+    useAnecdoteStore.setState({ anecdotes, filter: 'if it' });
+
+    render(<AnecdoteList />);
+
+    const contents = screen
+      .getAllByText(/If it hurts|Adding manpower/)
+      .map((el) => el.textContent);
+
+    expect(contents).toEqual(['If it hurts, do it more often']);
   });
 });
