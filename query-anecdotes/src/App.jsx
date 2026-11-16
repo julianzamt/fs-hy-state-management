@@ -1,18 +1,23 @@
-import AnecdoteForm from './components/AnecdoteForm'
-import Notification from './components/Notification'
+import AnecdoteForm from './components/AnecdoteForm';
+import Notification from './components/Notification';
+import { useQuery } from '@tanstack/react-query';
+import { getAnecdotes } from './requests';
 
 const App = () => {
   const handleVote = (anecdote) => {
-    console.log('vote')
+    console.log('vote');
+  };
+
+  const result = useQuery({
+    queryKey: ['anecdotes'],
+    queryFn: getAnecdotes,
+  });
+
+  if (result.isPending) {
+    return <div>loading data...</div>;
   }
 
-  const anecdotes = [
-    {
-      content: 'If it hurts, do it more often',
-      id: '47145',
-      votes: 0,
-    },
-  ]
+  const anecdotes = result.data;
 
   return (
     <div>
@@ -31,7 +36,7 @@ const App = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
